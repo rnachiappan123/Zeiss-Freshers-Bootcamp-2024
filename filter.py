@@ -1,20 +1,20 @@
-def filter(str_input, predicate):
+def filter(str_inputs, predicateFn):
     result = []
-    for string in str_input:
-        if (predicate(string)):
-            result.append(string)
+    for item in str_inputs:
+        if (predicateFn(item)):
+            result.append(item)
     return result
 
-def display(str_input):
-    for str in str_input:
-        print(str)
+def printToTerminal(array):
+    for item in array:
+        print(item)
 
-def startsWithA(string):
+def checkStringStartsWithA(string):
     if (string[0] == "A"):
         return True
     else:
         return False
 
 strings = ["Hello", "World", "Am", "Hi", "a"]
-filtered_result = filter(strings, startsWithA)
-display(filtered_result)
+filtered_result = filter(strings, checkStringStartsWithA)
+printToTerminal(filtered_result)

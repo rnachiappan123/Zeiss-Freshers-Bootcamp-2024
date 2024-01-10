@@ -11,12 +11,12 @@ class StartsWithStrategy:
             return False
 
 class StringListFilterController:
-    predicate = StartsWithStrategy()
+    strategy = StartsWithStrategy()
     
     def filter(self, stringList):
         result = []
         for stringItem in stringList:
-            if(self.predicate.invokeStrategy(stringItem)):
+            if(self.strategy.invokeStrategy(stringItem)):
                 result.append(stringItem)
         return result
 
@@ -32,6 +32,6 @@ class ConsoleDisplayController:
 strings = ["Hello", "World", "Hi", "Am", "a"]
 displayObject = ConsoleDisplayController()
 filterObject = StringListFilterController()
-filterObject.predicate.setStartChar("A")
+filterObject.strategy.setStartChar("A")
 displayObject.setContent(filterObject.filter(strings))
 displayObject.display()

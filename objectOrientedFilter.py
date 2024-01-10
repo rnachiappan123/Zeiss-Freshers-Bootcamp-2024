@@ -1,34 +1,37 @@
-class Filter:
-    result = []
-    predicateFn = None
+class StartsWithStrategy:
+    startChar = None
     
-    def __init__(self, predicate):
-        self.predicateFn = predicate
+    def setStartChar(self, key):
+        self.startChar = key
     
-    def filterInput(self, inputStrings):
-        for item in inputStrings:
-            if (self.predicateFn(item)):
-                self.result.append(item)
+    def invokeStrategy(self, stringItem):
+        if (stringItem[0] == self.startChar):
+            return True
+        else:
+            return False
+
+class StringListFilterController:
+    predicate = StartsWithStrategy()
     
-    def getResult(self):
-        return self.result
+    def filter(self, stringList):
+        result = []
+        for stringItem in stringList:
+            if(self.predicate.invokeStrategy(stringItem)):
+                result.append(stringItem)
+        return result
 
-class IO:
-    def printArrayToTerminal(self, array):
-        for item in array:
-            print(item)
-
-class Predicate:
-    def checkStringStartsWithAny(startChar):
-        predicate = lambda stringItem : stringItem[0] == startChar
-        return predicate
-        
-strings = ["Hello", "World", "Am", "Hi", "a"]
-
-predicateObject = Predicate()
-filterObject = Filter(Predicate.checkStringStartsWithAny("A"))
-iObject = IO()
-
-filterObject.filterInput(strings)
-filteredResult = filterObject.getResult()
-iObject.printArrayToTerminal(filteredResult)
+class ConsoleDisplayController:
+    content = None
+    
+    def setContent(self, message):
+        self.content = message
+    
+    def display(self):
+        print(self.content)
+    
+strings = ["Hello", "World", "Hi", "Am", "a"]
+displayObject = ConsoleDisplayController()
+filterObject = StringListFilterController()
+filterObject.predicate.setStartChar("A")
+displayObject.setContent(filterObject.filter(strings))
+displayObject.display()

@@ -14,7 +14,7 @@ namespace Code_Assignment
 
             foreach ( var requiredAttribute in requiredAttributes)
             {
-                if (deviceObj.Id == null)
+                if (deviceObj.Id == null || device.Obj.Equals(""))
                 {
                     isValid = false;
                     errors.Add(requiredAttribute.ErrorMessage);

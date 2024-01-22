@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Code_Assignment
 {
@@ -7,37 +7,29 @@ namespace Code_Assignment
         public static bool Validate(Device deviceObj, out List<string> errors)
         {
             bool isValid = true;
-            var requiredAttributes = (Required[]) typeof(Device).GetProperty("Id").GetCustomAttributes(typeof(Required), true);
-            var rangeAttributes = (Range[]) typeof(Device).GetProperty("Code").GetCustomAttributes(typeof(Range), true);
-            var maxLengthAttributes = (MaxLength[]) typeof(Device).GetProperty("Description").GetCustomAttributes(typeof(MaxLength), true);
+            var requiredAttribute = (Required)typeof(Device).GetProperty("Id").GetCustomAttributes(typeof(Required), true)[0];
+            var rangeAttribute = (Range)typeof(Device).GetProperty("Code").GetCustomAttributes(typeof(Range), true)[0];
+            var maxLengthAttribute = (MaxLength)typeof(Device).GetProperty("Description").GetCustomAttributes(typeof(MaxLength), true)[0];
             errors = new List<string>();
 
-            foreach ( var requiredAttribute in requiredAttributes)
+            if (deviceObj.Id == null || deviceObj.Id.Equals(""))
             {
-                if (deviceObj.Id == null || device.Obj.Equals(""))
-                {
-                    isValid = false;
-                    errors.Add(requiredAttribute.ErrorMessage);
-                }
+                isValid = false;
+                errors.Add(requiredAttribute.ErrorMessage);
             }
 
-            foreach ( var rangeAttribute in rangeAttributes)
+            if (deviceObj.Code < rangeAttribute.Start || deviceObj.Code > rangeAttribute.End)
             {
-                if (deviceObj.Code < rangeAttribute.Start || deviceObj.Code > rangeAttribute.End)
-                {
-                    isValid = false;
-                    errors.Add(rangeAttribute.ErrorMessage);
-                }
+                isValid = false;
+                errors.Add(rangeAttribute.ErrorMessage);
             }
 
-            foreach ( var maxLengthAttribute in maxLengthAttributes)
+            if (deviceObj.Description.Length > maxLengthAttribute.Length)
             {
-                if (deviceObj.Description.Length > maxLengthAttribute.Length)
-                {
-                    isValid = false;
-                    errors.Add(maxLengthAttribute.ErrorMessage);
-                }
+                isValid = false;
+                errors.Add(maxLengthAttribute.ErrorMessage);
             }
+
             return isValid;
         }
     }

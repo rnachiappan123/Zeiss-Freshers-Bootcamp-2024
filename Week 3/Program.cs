@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Code_Assignment
 {
@@ -32,7 +31,6 @@ namespace Code_Assignment
                     System.Console.WriteLine(item);
                 }
             }
-            Console.ReadLine();
         }
     }
 }

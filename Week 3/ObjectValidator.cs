@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System;
+﻿using System.Collections.Generic;
 
 namespace Code_Assignment
 {
@@ -10,9 +7,9 @@ namespace Code_Assignment
         public static bool Validate(Device deviceObj, out List<string> errors)
         {
             bool isValid = true;
-            var requiredAttributes = (Required[])typeof(Device).GetCustomAttributes(typeof(Required), true);
-            var rangeAttributes = (Range[])typeof(Device).GetCustomAttributes(typeof(Range), true);
-            var maxLengthAttributes = (MaxLength[])typeof(Device).GetCustomAttributes(typeof(MaxLength), true);
+            var requiredAttributes = (Required[]) typeof(Device).GetProperty("Id").GetCustomAttributes(typeof(Required), true);
+            var rangeAttributes = (Range[]) typeof(Device).GetProperty("Code").GetCustomAttributes(typeof(Range), true);
+            var maxLengthAttributes = (MaxLength[]) typeof(Device).GetProperty("Description").GetCustomAttributes(typeof(MaxLength), true);
             errors = new List<string>();
 
             foreach ( var requiredAttribute in requiredAttributes)
@@ -20,16 +17,16 @@ namespace Code_Assignment
                 if (deviceObj.Id == null)
                 {
                     isValid = false;
-                    errors.Append(requiredAttribute.ErrorMessage);
+                    errors.Add(requiredAttribute.ErrorMessage);
                 }
             }
 
             foreach ( var rangeAttribute in rangeAttributes)
             {
-                if (deviceObj.Code <= rangeAttribute.Start || deviceObj.Code >= rangeAttribute.End)
+                if (deviceObj.Code < rangeAttribute.Start || deviceObj.Code > rangeAttribute.End)
                 {
                     isValid = false;
-                    errors.Append(rangeAttribute.ErrorMessage);
+                    errors.Add(rangeAttribute.ErrorMessage);
                 }
             }
 
@@ -38,7 +35,7 @@ namespace Code_Assignment
                 if (deviceObj.Description.Length > maxLengthAttribute.Length)
                 {
                     isValid = false;
-                    errors.Append(maxLengthAttribute.ErrorMessage);
+                    errors.Add(maxLengthAttribute.ErrorMessage);
                 }
             }
             return isValid;

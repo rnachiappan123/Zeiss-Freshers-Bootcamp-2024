@@ -28,13 +28,20 @@ namespace TaskManagerProblem
 
     public class PrintScanner : IPrinter, IScanner
     {
+        private readonly Printer printer;
+        private readonly Scanner scanner;
+        public PrintScanner()
+        {
+            printer = new Printer();
+            scanner = new Scanner();
+        }
         public void Print(string path)
         {
-            System.Console.WriteLine($"Printing .....{path}");
+            printer.Print(path);
         }
         public void Scan(string path)
         {
-            System.Console.WriteLine($"Scanning .....{path}");
+            scanner.Scan(path);
         }
     }
     public static class TaskManager

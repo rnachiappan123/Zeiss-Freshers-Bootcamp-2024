@@ -37,7 +37,7 @@
             observer = null;
             timer.StopTimer();
         }
-
+        
         private void NotifyObservers()
         {
             observer?.NotifyPeopleCount(peopleCount);

@@ -1,0 +1,6 @@
+Auto Climate Control System
+
+Temperate inside car needs to be regulated
+2 parameters (inputs): no. of people, outside temp.
+output: new temp. (to ECU, which in return calls A/C control system - no need to implement either)
+calculate new temp using fake formula.
